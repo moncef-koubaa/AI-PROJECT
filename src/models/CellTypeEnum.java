@@ -1,6 +1,6 @@
 package models;
 
-public enum NodeTypeEnum {
+public enum CellTypeEnum {
     EMPTY,
     TUNNEL,
     STORE,
