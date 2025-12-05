@@ -8,11 +8,11 @@ public class Transition {
 
     //Getters and Setters
     public Cell getNextCell() {
-        return nextNode;
+        return nextCell;
     }
 
-    public void setNextNode(Node nextNode) {
-        this.nextNode = nextNode;
+    public void setNextCell(Cell nextCell) {
+        this.nextCell = nextCell;
     }
 
     public int getCost() {
