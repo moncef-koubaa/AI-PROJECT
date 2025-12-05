@@ -5,18 +5,9 @@ import java.util.List;
 public class Grid {
 
     int length, width;
-    List<List<Node>> nodes;
-    List<Node> stores;
-    List<Node> clients;
-    List<List<Node>> tunnels;
-
-    // Getters and Setters
-    public int getLength() {
-        return length;
-    }
-    public void setLength(int length) {
-        this.length = length;
-    }
+    List<List<Cell>> nodes;
+    List<Cell> stores;
+    List<Cell> clients;
 
     public int getWidth() {
         return width;

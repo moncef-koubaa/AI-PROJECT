@@ -1,36 +1,18 @@
 package models;
 
-import java.util.Map;
-
 public class Node {
 
-    int row, col;
-    Map<ActionEnum, Transition> actions;
-    NodeTypeEnum type;
+    public Cell cell;
+    public Node parent;
+    public ActionEnum incomingAction; // Action taken to reach this state from parent
+    public int pathCost;
+    public int depth;
 
-    // Getters and Setters
-    public int getRow() {
-        return row;
-    }
-    public void setRow(int row) {
-        this.row = row;
-    }
-    public int getCol() {
-        return col;
-    }
-    public void setCol(int col) {
-        this.col = col;
-    }
-    public Map<ActionEnum, Transition> getActions() {
-        return actions;
-    }
-    public void setActions(Map<ActionEnum, Transition> actions) {
-        this.actions = actions;
-    }
-    public NodeTypeEnum getType() {
-        return type;
-    }
-    public void setType(NodeTypeEnum type) {
-        this.type = type;
+    public Node(Cell cell, Node parent, ActionEnum incomingAction, int pathCost, int depth) {
+        this.cell = cell;
+        this.parent = parent;
+        this.incomingAction = incomingAction;
+        this.pathCost = pathCost;
+        this.depth = depth;
     }
 }

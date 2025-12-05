@@ -2,12 +2,12 @@ package models;
 
 public class Transition {
 
-    Node nextNode;
-    int cost;
-    boolean isBlocked;
+    public Cell nextCell;
+    public int cost;
+    public boolean isBlocked;
 
     //Getters and Setters
-    public Node getNextNode() {
+    public Cell getNextCell() {
         return nextNode;
     }
 
