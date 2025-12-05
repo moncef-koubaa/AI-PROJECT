@@ -16,6 +16,7 @@ public class GridGenerator {
         grid.setNodes(new ArrayList<>());
         grid.setStores(new ArrayList<>());
         grid.setClients(new ArrayList<>());
+        grid.setTunnels(new ArrayList<>());
 
         for (int r = 0; r < grid.getLength(); r++) {
             List<Node> row = new ArrayList<>();
@@ -32,6 +33,7 @@ public class GridGenerator {
 
         int storeCount = randomInt(1, 3);
         int clientCount = randomInt(1, 6);
+        int tunnelsCount = randomInt(1, 4);
 
         for (int i = 0; i < storeCount; i++) {
             Node n = randomEmptyNode(grid);
@@ -46,6 +48,7 @@ public class GridGenerator {
         }
 
         buildTransitions(grid);
+        buildTunnels(grid, tunnelsCount);
 
         return grid;
     }
@@ -81,6 +84,36 @@ public class GridGenerator {
         }
     }
 
+    private void buildTunnels(Grid grid, int tunnelsCount) {
+        for (int i = 0; i < tunnelsCount; i++) {
+            Node a = randomEmptyNode(grid);
+            Node b;
+            do {
+                b = randomEmptyNode(grid);
+            } while (a == b);
+            a.setType(NodeTypeEnum.TUNNEL);
+            b.setType(NodeTypeEnum.TUNNEL);
+
+            Transition tAB = new Transition();
+            tAB.setNextNode(b);
+            tAB.setCost(1); // To fix
+            tAB.setBlocked(false);
+
+            Transition tBA = new Transition();
+            tBA.setNextNode(a);
+            tBA.setCost(1); // To fix
+            tBA.setBlocked(false);
+
+            a.getActions().put(ActionEnum.ENTER_TUNNEL, tAB);
+            b.getActions().put(ActionEnum.ENTER_TUNNEL, tBA);
+        
+            List<Node> tunnelPair = new ArrayList<>();
+            tunnelPair.add(a);
+            tunnelPair.add(b);
+            grid.getTunnels().add(tunnelPair);
+        }
+    }
+
     private Node randomEmptyNode(Grid grid) {
         while (true) {
             int r = random.nextInt(grid.getLength());
@@ -95,23 +128,6 @@ public class GridGenerator {
     }
 
 
-    public String toString(Grid grid) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(grid.getLength()).append(";")
-        .append(grid.getWidth()).append(";")
-        .append(grid.getClients().size()).append(";")
-        .append(grid.getStores().size()).append(";");
-
-        for (Node client : grid.getClients()) {
-            sb.append(client.getRow()).append(",")
-            .append(client.getCol()).append(";");
-        }
-
-        sb.append(";"); // empty tunnels section for now
-
-        return sb.toString();
-    }
+    
 
 }
