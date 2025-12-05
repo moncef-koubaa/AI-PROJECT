@@ -1,9 +1,12 @@
 import java.io.IOException;
+import com.sun.management.OperatingSystemMXBean;
+import java.lang.management.ManagementFactory;
+
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         int choice;
 
@@ -39,6 +42,7 @@ public class Main {
 
                     System.out.println("\nRunning search...");
                     // TODO: link to your algorithm calls
+                    monitorFunction(Main::myFunction);
                     // if(algo == 1) BFS();
                     // if(algo == 2) DFS();
                     // if(algo == 3) UCS();
@@ -101,7 +105,41 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+    public static void myFunction() {
+        int t[] = new int[10000000];
+        // Example heavy work
+        long sum = 0;
+        for(long i = 0; i < 3000000000L; i++){
+            sum += i;
+        }
+        System.out.println("Function finished. Result = " + sum);
+    }
 
+    // ---- CPU & RAM monitor wrapper ----
+    public static void monitorFunction(Runnable task) throws Exception {
+        OperatingSystemMXBean osBean =
+                ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+        Runtime runtime = Runtime.getRuntime();
 
+        System.out.println("Monitoring Started...\n");
+
+        long startUsedMem = (runtime.totalMemory() - runtime.freeMemory());
+        long startTime = System.nanoTime();
+        double startCPU = osBean.getProcessCpuLoad();
+
+        task.run();
+
+        long endTime = System.nanoTime();
+        long endUsedMem = (runtime.totalMemory() - runtime.freeMemory());
+        double endCPU = osBean.getProcessCpuLoad();
+
+        long memUsedMB = (endUsedMem - startUsedMem) / (1024 * 1024);
+        double cpuUsage = (endCPU - startCPU) * 100;
+
+        System.out.println("\n----- FUNCTION USAGE REPORT -----");
+        System.out.println("Execution time: " + ((endTime - startTime)/1e6) + " ms");
+        System.out.println("Memory change: " + memUsedMB + " MB");
+        System.out.printf("Approx CPU load change: %.2f%%\n", cpuUsage);
     }
 }
