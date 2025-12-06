@@ -116,8 +116,8 @@ public class GridGenerator {
 
     private Cell randomEmptyNode(Grid grid) {
         while (true) {
-            int r = random.nextInt(grid.getLength());
-            int c = random.nextInt(grid.getWidth());
+            int r = random.nextInt(grid.getLength() - 1);
+            int c = random.nextInt(grid.getWidth() - 1);
             Cell n = grid.getCells().get(r).get(c);
             if (n.getType() == CellTypeEnum.EMPTY) return n;
         }
