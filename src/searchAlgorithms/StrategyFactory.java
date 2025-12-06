@@ -1,6 +1,7 @@
 package searchAlgorithms;
 
 import contracts.ISearch;
+import heuristics.ManhattanHeuristic;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

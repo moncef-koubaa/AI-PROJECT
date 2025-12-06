@@ -1,12 +1,9 @@
 package searchAlgorithms;
 
 import contracts.ISearch;
-import jdk.jshell.spi.ExecutionControl;
 import models.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 abstract public class GeneralSearch implements ISearch {
 
@@ -62,15 +59,27 @@ abstract public class GeneralSearch implements ISearch {
     @Override
     public String search(Grid grid, Cell startStore, Cell targetClient) {
         Queue<Node> searchQueue = makeQueue(makeNode(startStore), grid, targetClient);
-        int expandedNodes = 1;
+        Set<Cell> visited = new HashSet<>();
+        visited.add(startStore);
+        int expandedNodes = 0;
+
         while (!searchQueue.isEmpty()) {
             Node currentNode = searchQueue.poll();
             expandedNodes++;
+
             if (reachedTarget(currentNode, targetClient)) {
                 return success(currentNode, expandedNodes);
             }
+
             for (ActionEnum action : ActionEnum.values()) {
-                enqueue(searchQueue, next(currentNode, action));
+                Transition trans = currentNode.cell.getTransition(action);
+                if (trans == null || trans.isBlocked) continue;
+
+                Cell nextCell = trans.nextCell;
+                if (!visited.contains(nextCell)) {
+                    visited.add(nextCell);
+                    enqueue(searchQueue, next(currentNode, action));
+                }
             }
         }
         return fail(expandedNodes);
