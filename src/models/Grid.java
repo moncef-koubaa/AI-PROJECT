@@ -7,9 +7,10 @@ import java.util.List;
 public class Grid {
 
     int length, width;
-    List<List<Cell>> nodes;
+    List<List<Cell>> cells;
     List<Cell> stores;
     List<Cell> clients;
+    List<List<Cell>> tunnels;
 
     public Grid() {
     }
@@ -17,29 +18,17 @@ public class Grid {
     public Grid(int length, int width, List<List<Cell>> nodes, List<Cell> stores, List<Cell> clients) {
         this.length = length;
         this.width = width;
-        this.nodes = nodes;
+        this.cells = nodes;
         this.stores = stores;
         this.clients = clients;
 
     }
 
-    public int getLength() {
-        return length;
-    }
-    public int getWidth() {
-        return width;
-    }
     public List<List<Cell>> getNodes() {
-        return nodes;
-    }
-    public List<Cell> getStores() {
-        return stores;
-    }
-    public List<Cell> getClients() {
-        return clients;
+        return cells;
     }
 
-    public static Grid fromString(String gridString) {
+    public Grid fromString(String gridString) {
         String[] parts = gridString.split(";");
         int width = Integer.parseInt(parts[0]);
         int length = Integer.parseInt(parts[1]);
@@ -76,7 +65,7 @@ public class Grid {
         Grid grid = new Grid();
         grid.length = length;
         grid.width = width;
-        grid.nodes = grid.generateEmptyNodeList(length, width);
+        grid.cells = grid.generateEmptyNodeList(length, width);
         grid.stores = new ArrayList<>();
         grid.clients = new ArrayList<>();
 
@@ -89,10 +78,10 @@ public class Grid {
             int toY = Integer.parseInt(trafficParts[3]);
             int distance = Integer.parseInt(trafficParts[4]);
 
-            Cell fromCell = grid.nodes.get(fromX).get(fromY);
+            Cell fromCell = grid.cells.get(fromX).get(fromY);
             fromCell.type = gridMap[fromX][fromY];
 
-            Cell toCell = grid.nodes.get(toX).get(toY);
+            Cell toCell = grid.cells.get(toX).get(toY);
             toCell.type = gridMap[toX][toY];
 
             if(fromCell.type == CellTypeEnum.STORE) {
@@ -161,5 +150,71 @@ public class Grid {
         return grid;
     }
 
+    public int getWidth() {
+        return width;
+    }
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getLength() {
+        return length;
+    }
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public List<List<Cell>> getCells() {
+        return cells;
+    }
+    public void setCells(List<List<Cell>> cells) {
+        this.cells = cells;
+    }
+
+    public List<Cell> getStores() {
+        return stores;
+    }
+    public void setStores(List<Cell> stores) {
+        this.stores = stores;
+    }
+
+    public List<Cell> getClients() {
+        return clients;
+    }
+    public void setClients(List<Cell> clients) {
+        this.clients = clients;
+    }
+    public List<List<Cell>> getTunnels() {
+        return tunnels;
+    }
+    public void setTunnels(List<List<Cell>> tunnels) {
+        this.tunnels = tunnels;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(this.length).append(";")
+                .append(this.width).append(";")
+                .append(this.clients.size()).append(";")
+                .append(this.stores.size()).append(";");
+
+        for (Cell client : this.clients) {
+            sb.append(client.getRow()).append(",")
+                    .append(client.getCol()).append(";");
+        }
+
+        for (List<Cell> tunnel : this.tunnels) {
+            sb.append(tunnel.get(0).getRow()).append(",")
+                    .append(tunnel.get(0).getCol()).append(",")
+                    .append(tunnel.get(1).getRow()).append(",")
+                    .append(tunnel.get(1).getCol()).append(";");
+        }
+
+        return sb.toString();
+    }
 }
+
 
