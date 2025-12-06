@@ -10,7 +10,7 @@ import searchAlgorithms.StrategyFactory;
 public class DeliveryPlanner {
     void plan(String initialState, String strategy, Boolean visualize) {
         ISearch searchAlgorithm = StrategyFactory.getStrategy(strategy);
-        Grid grid = Grid.fromString(initialState);
+        Grid grid = new Grid().fromString(initialState);
         StringBuilder results = new StringBuilder();
         for(Cell client : grid.getClients()){
 
