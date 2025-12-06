@@ -8,9 +8,13 @@ import searchAlgorithms.GeneralSearch;
 import searchAlgorithms.StrategyFactory;
 
 public class DeliveryPlanner {
-    void plan(String initialState, String strategy, Boolean visualize) {
+    public void plan(String initialState, String strategy, Boolean visualize) {
         ISearch searchAlgorithm = StrategyFactory.getStrategy(strategy);
         Grid grid = new Grid().fromString(initialState);
+        if(grid == null){
+            System.out.println("Invalid grid");
+            return;
+        }
         StringBuilder results = new StringBuilder();
         for(Cell client : grid.getClients()){
 
@@ -35,6 +39,7 @@ public class DeliveryPlanner {
                     .append(path).append("\n");
 
         }
+
         if(visualize){
             System.out.println("Visualization is not implemented yet.");
         }
@@ -48,7 +53,7 @@ public class DeliveryPlanner {
 
     }
 
-    void PrintGrid(Grid grid) {
+    public void PrintGrid(Grid grid) {
         StringBuilder[] visualization = new StringBuilder[grid.getLength() * 2];
         for (int i = 0; i < grid.getLength() * 2 ; i+=2) {
             for (int j = 0; j < grid.getWidth(); j++) {

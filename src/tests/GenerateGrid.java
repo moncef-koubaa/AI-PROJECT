@@ -1,5 +1,6 @@
 package tests;
 
+import deliveryPlanner.DeliveryPlanner;
 import models.Grid;
 import services.GridGenerator;
 
@@ -7,6 +8,11 @@ public class GenerateGrid {
     public static void main(String[] args) {
         GridGenerator generator = new GridGenerator();
         Grid grid = generator.generate();
+        String initialGridString = "10;6;2;1;1,1,4,2;0,0,5,5;2,0;0,0,0,1,5;0,1,0,2,3;4,2,5,2,2;2,0,2,1,0;";
+        System.out.println(initialGridString);
+        DeliveryPlanner planner = new DeliveryPlanner();
+        planner.PrintGrid(grid);
+        planner.plan(initialGridString, "DF", false);
 
         System.out.println("Grid Size: " + grid.getLength() + " x " + grid.getWidth());
         System.out.println("Clients:");
