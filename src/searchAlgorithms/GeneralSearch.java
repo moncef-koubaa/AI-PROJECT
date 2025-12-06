@@ -1,6 +1,7 @@
 package searchAlgorithms;
 
 import contracts.ISearch;
+import jdk.jshell.spi.ExecutionControl;
 import models.*;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ abstract public class GeneralSearch implements ISearch {
 
     @Override
     public String search(Grid grid, Cell startStore, Cell targetClient) {
-        Queue<Node> searchQueue = makeQueue(makeNode(startStore));
+        Queue<Node> searchQueue = makeQueue(makeNode(startStore), grid, targetClient);
         int expandedNodes = 1;
         while (!searchQueue.isEmpty()) {
             Node currentNode = searchQueue.poll();
@@ -75,6 +76,6 @@ abstract public class GeneralSearch implements ISearch {
         return fail(expandedNodes);
     }
 
-    abstract protected Queue<Node> makeQueue(Node initNode);
+    abstract protected Queue<Node> makeQueue(Node initNode, Grid grid, Cell goal);
     abstract protected void enqueue(Queue<Node> queue, Node node);
 }

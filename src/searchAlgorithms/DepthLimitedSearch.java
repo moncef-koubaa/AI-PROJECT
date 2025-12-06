@@ -1,5 +1,7 @@
 package searchAlgorithms;
 
+import models.Cell;
+import models.Grid;
 import models.Node;
 
 import java.util.ArrayDeque;
@@ -14,7 +16,7 @@ public class DepthLimitedSearch extends GeneralSearch {
     }
 
     @Override
-    protected Queue<Node> makeQueue(Node initNode) {
+    protected Queue<Node> makeQueue(Node initNode, Grid grid, Cell cell) {
         Queue<Node> queue = new ArrayDeque<>();
         queue.add(initNode);
         return queue;
