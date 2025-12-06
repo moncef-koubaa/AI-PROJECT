@@ -1,5 +1,9 @@
 import java.io.IOException;
 import com.sun.management.OperatingSystemMXBean;
+import models.Grid;
+import services.GridGenerator;
+import services.GridService;
+
 import java.lang.management.ManagementFactory;
 
 import java.util.Scanner;
@@ -8,6 +12,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
+        GridGenerator gridGeneratorService = new GridGenerator();
+        GridService gridService = new GridService();
+        Grid grid = null;
         int choice;
 
         do {
@@ -28,7 +35,9 @@ public class Main {
 
                 case 1:
                     System.out.println("\nGenerating map...");
-                    // TODO: generateRandomMap();
+                    grid= gridGeneratorService.generate();
+                    System.out.println("\nGenerated Map:");
+                    gridService.print(grid);
                     pause(); break;
 
                 case 2:
@@ -43,7 +52,7 @@ public class Main {
                     System.out.println("\nRunning search...");
                     // TODO: link to your algorithm calls
                     monitorFunction(Main::myFunction);
-                    // if(algo == 1) BFS();
+                     if(algo == 1) BFS();
                     // if(algo == 2) DFS();
                     // if(algo == 3) UCS();
                     // if(algo == 4) AStar();
