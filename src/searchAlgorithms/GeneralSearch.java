@@ -58,7 +58,7 @@ abstract public class GeneralSearch implements ISearch {
 
     @Override
     public String search(Grid grid, Cell startStore, Cell targetClient) {
-        Queue<Node> searchQueue = makeQueue(makeNode(startStore));
+        Queue<Node> searchQueue = makeQueue(makeNode(startStore), grid, targetClient);
         Set<Cell> visited = new HashSet<>();
         visited.add(startStore);
         int expandedNodes = 0;
@@ -85,6 +85,6 @@ abstract public class GeneralSearch implements ISearch {
         return fail(expandedNodes);
     }
 
-    abstract protected Queue<Node> makeQueue(Node initNode);
+    abstract protected Queue<Node> makeQueue(Node initNode, Grid grid, Cell goal);
     abstract protected void enqueue(Queue<Node> queue, Node node);
 }

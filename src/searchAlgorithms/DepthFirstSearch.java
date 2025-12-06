@@ -1,16 +1,14 @@
 package searchAlgorithms;
 
-import models.Node;
-
-import java.util.ArrayDeque;
-import java.util.Queue;
+import models.Cell;
+import models.Grid;
 
 public class DepthFirstSearch extends GeneralSearch {
     @Override
-    protected java.util.Queue<models.Node> makeQueue(models.Node initNode) {
-        Queue<Node> queue = new ArrayDeque<>();
-        queue.add(initNode);
-        return queue;
+    protected java.util.Queue<models.Node> makeQueue(models.Node initNode, Grid grid, Cell goal) {
+        java.util.Deque<models.Node> stack = new java.util.ArrayDeque<>();
+        stack.push(initNode);
+        return stack;
     }
 
     @Override
