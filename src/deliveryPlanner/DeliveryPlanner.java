@@ -11,6 +11,7 @@ public class DeliveryPlanner {
     public void plan(String initialState, String strategy, Boolean visualize) {
         ISearch searchAlgorithm = StrategyFactory.getStrategy(strategy);
         Grid grid = new Grid().fromString(initialState);
+        PrintGrid(grid);
         if(grid == null){
             System.out.println("Invalid grid");
             return;
@@ -66,6 +67,8 @@ public class DeliveryPlanner {
                     case TUNNEL -> visualization[i].append("T");
                     case STORE -> visualization[i].append("S");
                     case CLIENT -> visualization[i].append("C");
+                    case null -> visualization[i].append(" ");
+                    default -> visualization[i].append("?");
                 }
 
                 if(cell.getTransition(ActionEnum.RIGHT) != null){

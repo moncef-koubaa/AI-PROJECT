@@ -14,7 +14,7 @@ public class Main {
         System.out.println(initialGridString);
         DeliveryPlanner planner = new DeliveryPlanner();
         planner.PrintGrid(grid);
-        planner.plan(initialGridString, "BF", false);
+        planner.plan(initialGridString, "DF", false);
 //        Scanner sc = new Scanner(System.in);
 //        int choice;
 //

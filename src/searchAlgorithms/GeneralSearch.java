@@ -74,7 +74,6 @@ abstract public class GeneralSearch implements ISearch {
             for (ActionEnum action : ActionEnum.values()) {
                 Transition trans = currentNode.cell.getTransition(action);
                 if (trans == null || trans.isBlocked) continue;
-
                 Cell nextCell = trans.nextCell;
                 if (!visited.contains(nextCell)) {
                     visited.add(nextCell);
