@@ -94,7 +94,7 @@ public class GridGenerator {
             a.setType(CellTypeEnum.TUNNEL);
             b.setType(CellTypeEnum.TUNNEL);
             
-            int cost = Math.abs(a.getRow() - b.getRow()) + Math.abs(a.getCol() - b.getCol()); // To check
+            int cost = Math.abs(a.getRow() - b.getRow()) + Math.abs(a.getCol() - b.getCol());
 
             Transition tAB = new Transition();
             tAB.setNextCell(b);

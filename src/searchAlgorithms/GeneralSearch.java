@@ -1,9 +1,8 @@
 package searchAlgorithms;
 
 import contracts.ISearch;
-import models.*;
-
 import java.util.*;
+import models.*;
 
 abstract public class GeneralSearch implements ISearch {
 
