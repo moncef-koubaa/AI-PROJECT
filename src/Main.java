@@ -56,7 +56,7 @@ public class Main {
                     System.out.println("\nRunning search...");
                     // TODO: link to your algorithm calls
                     monitorFunction(Main::myFunction);
-                     if(algo == 1) BFS();
+//                     if(algo == 1) BFS();
                     // if(algo == 2) DFS();
                     // if(algo == 3) UCS();
                     // if(algo == 4) AStar();
