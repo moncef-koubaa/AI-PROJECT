@@ -6,7 +6,7 @@ import models.Grid;
 import models.SearchResult;
 
 public class IterativeDeepeningSearch implements ISearch {
-    private static final int MAX_DEPTH = 1000;
+    private static final int MAX_DEPTH = 20000;
 
     @Override
     public String search(Grid grid, Cell startStore, Cell targetClient) {

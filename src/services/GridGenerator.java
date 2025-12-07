@@ -10,8 +10,10 @@ public class GridGenerator {
     public Grid generate() {
 
         Grid grid = new Grid();
-        grid.setLength(randomInt(6, 10));
-        grid.setWidth(randomInt(6, 10));
+//        grid.setLength(randomInt(6, 10));
+        grid.setLength(1000);
+//        grid.setWidth(randomInt(6, 10));
+        grid.setWidth(1000);
 
         grid.setCells(new ArrayList<>());
         grid.setStores(new ArrayList<>());
