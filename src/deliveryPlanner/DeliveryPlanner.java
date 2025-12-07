@@ -4,6 +4,7 @@ import contracts.ISearch;
 import models.ActionEnum;
 import models.Cell;
 import models.Grid;
+import models.SearchResult;
 import searchAlgorithms.GeneralSearch;
 import searchAlgorithms.StrategyFactory;
 
@@ -26,12 +27,18 @@ public class DeliveryPlanner {
             for(Cell store : grid.getStores()){
                 result = searchAlgorithm.search(grid, store, client);
                 String[] resultParts = result.split(";");
-                if(bestCost > Integer.parseInt(resultParts[1])){
-                    bestCost = Integer.parseInt(resultParts[1]);
-                    bestStore = store;
-                    path = resultParts[0];
+                SearchResult searchResult= SearchResult.fromString(result);
+                if(searchResult.success) {
+                    if (bestCost > Integer.parseInt(resultParts[1])) {
+                        bestCost = Integer.parseInt(resultParts[1]);
+                        bestStore = store;
+                        path = resultParts[0];
+                    }
                 }
-
+            }
+            if (bestStore == null) {
+                results.append("NO_PATH").append("\n");
+                continue;
             }
 
             results.append(bestStore.row).append(",").append(bestStore.col).append(",")
