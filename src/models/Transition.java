@@ -3,7 +3,17 @@ package models;
 public class Transition {
 
     public Cell nextCell;
+
+    public Transition() {
+    }
+
     public int cost;
+
+    public Transition(Cell nextCell, int cost) {
+        this.nextCell = nextCell;
+        this.cost = cost;
+    }
+
     public boolean isBlocked;
 
     //Getters and Setters

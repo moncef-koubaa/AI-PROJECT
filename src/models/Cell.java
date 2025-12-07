@@ -1,5 +1,6 @@
 package models;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Cell {
@@ -40,5 +41,12 @@ public class Cell {
     }
     public void setType(CellTypeEnum type) {
         this.type = type;
+    }
+    public void addAction(ActionEnum action, Transition transition) {
+        actions.put(action, transition);
+    }
+
+    public Cell() {
+        this.actions = new HashMap<>(); // initialize ALWAYS
     }
 }
