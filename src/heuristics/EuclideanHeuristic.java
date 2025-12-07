@@ -5,9 +5,11 @@ import models.Cell;
 import models.Grid;
 import models.Node;
 
-public class ManhattanHeuristic implements IEvaluate {
+public class EuclideanHeuristic implements IEvaluate {
+
     @Override
     public Double evaluate(Node node, Grid grid, Cell goal) {
-        return (double) (Math.abs(goal.row - node.cell.row) + Math.abs(goal.col - node.cell.col));
+        return Math.sqrt(Math.pow(goal.row - node.cell.row, 2) +
+                Math.pow(goal.col - node.cell.col, 2));
     }
 }

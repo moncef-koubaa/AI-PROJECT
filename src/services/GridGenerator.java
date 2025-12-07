@@ -93,15 +93,17 @@ public class GridGenerator {
             } while (a == b);
             a.setType(CellTypeEnum.TUNNEL);
             b.setType(CellTypeEnum.TUNNEL);
+            
+            int cost = Math.abs(a.getRow() - b.getRow()) + Math.abs(a.getCol() - b.getCol()); // To check
 
             Transition tAB = new Transition();
             tAB.setNextCell(b);
-            tAB.setCost(1); // To fix
+            tAB.setCost(cost);
             tAB.setBlocked(false);
 
             Transition tBA = new Transition();
             tBA.setNextCell(a);
-            tBA.setCost(1); // To fix
+            tBA.setCost(cost); 
             tBA.setBlocked(false);
 
             a.getActions().put(ActionEnum.ENTER_TUNNEL, tAB);
@@ -116,8 +118,8 @@ public class GridGenerator {
 
     private Cell randomEmptyNode(Grid grid) {
         while (true) {
-            int r = random.nextInt(grid.getLength());
-            int c = random.nextInt(grid.getWidth());
+            int r = random.nextInt(grid.getLength() - 1);
+            int c = random.nextInt(grid.getWidth() - 1);
             Cell n = grid.getCells().get(r).get(c);
             if (n.getType() == CellTypeEnum.EMPTY) return n;
         }

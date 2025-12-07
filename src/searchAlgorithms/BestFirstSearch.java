@@ -1,6 +1,8 @@
 package searchAlgorithms;
 
 import contracts.IEvaluate;
+import models.Cell;
+import models.Grid;
 import models.Node;
 
 import java.util.PriorityQueue;
@@ -14,16 +16,15 @@ public class BestFirstSearch extends GeneralSearch {
     }
 
     @Override
-    protected Queue<Node> makeQueue(Node initNode) {
+    protected Queue<Node> makeQueue(Node initNode, Grid grid, Cell goal) {
         PriorityQueue<Node> queue = new PriorityQueue<>(
                 (a, b) -> Double.compare(
-                        evaluator.evaluate(a),
-                        evaluator.evaluate(b)
+                        evaluator.evaluate(a, grid, goal),
+                        evaluator.evaluate(b, grid, goal)
                 )
         );
         queue.add(initNode);
         return queue;
-
     }
 
     @Override
