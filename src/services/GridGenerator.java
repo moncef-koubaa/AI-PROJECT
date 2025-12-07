@@ -30,19 +30,26 @@ public class GridGenerator {
             }
             grid.getCells().add(row);
         }
-
-        int storeCount = randomInt(1, 3);
-        int clientCount = randomInt(1, 6);
-        int tunnelsCount = randomInt(1, 4);
-
+        int storeCount, clientCount, tunnelsCount;
+        do {
+            storeCount = randomInt(1, 3);
+            clientCount = randomInt(1, 6);
+            tunnelsCount = randomInt(1, 4);
+        } while (storeCount + clientCount + tunnelsCount > grid.getLength() * grid.getWidth());
         for (int i = 0; i < storeCount; i++) {
-            Cell n = randomEmptyNode(grid);
+            Cell n;
+            do {
+                n = randomEmptyNode(grid);
+            } while (n.getType() != CellTypeEnum.EMPTY);
             n.setType(CellTypeEnum.STORE);
             grid.getStores().add(n);
         }
 
         for (int i = 0; i < clientCount; i++) {
-            Cell n = randomEmptyNode(grid);
+            Cell n;
+            do {
+                n = randomEmptyNode(grid);
+            } while (n.getType() != CellTypeEnum.EMPTY);
             n.setType(CellTypeEnum.CLIENT);
             grid.getClients().add(n);
         }
@@ -68,16 +75,20 @@ public class GridGenerator {
     }
 
     private void addTransition(Grid grid, Cell from, ActionEnum action, int nr, int nc) {
-        if (nr < 0 || nr >= grid.getLength()) return ;
-        if (nc < 0 || nc >= grid.getWidth()) return;
-        
+        if (nr < 0 || nr >= grid.getLength()) {
+            return;
+        }
+        if (nc < 0 || nc >= grid.getWidth()) {
+            return;
+        }
+
         Transition t = new Transition();
 
         Cell to = grid.getCells().get(nr).get(nc);
 
         t.setNextCell(to);
-        t.setCost(randomInt(1, 4));
-        t.setBlocked(random.nextInt(10) < 2);
+        t.setCost(randomInt(0, 5));
+        t.setBlocked(t.getCost() == 0);
 
         if (!t.isBlocked()) {
             from.getActions().put(action, t);
@@ -93,7 +104,7 @@ public class GridGenerator {
             } while (a == b);
             a.setType(CellTypeEnum.TUNNEL);
             b.setType(CellTypeEnum.TUNNEL);
-            
+
             int cost = Math.abs(a.getRow() - b.getRow()) + Math.abs(a.getCol() - b.getCol());
 
             Transition tAB = new Transition();
@@ -103,12 +114,12 @@ public class GridGenerator {
 
             Transition tBA = new Transition();
             tBA.setNextCell(a);
-            tBA.setCost(cost); 
+            tBA.setCost(cost);
             tBA.setBlocked(false);
 
             a.getActions().put(ActionEnum.ENTER_TUNNEL, tAB);
             b.getActions().put(ActionEnum.ENTER_TUNNEL, tBA);
-        
+
             List<Cell> tunnelPair = new ArrayList<>();
             tunnelPair.add(a);
             tunnelPair.add(b);
@@ -121,15 +132,14 @@ public class GridGenerator {
             int r = random.nextInt(grid.getLength() - 1);
             int c = random.nextInt(grid.getWidth() - 1);
             Cell n = grid.getCells().get(r).get(c);
-            if (n.getType() == CellTypeEnum.EMPTY) return n;
+            if (n.getType() == CellTypeEnum.EMPTY) {
+                return n;
+            }
         }
     }
 
     private int randomInt(int min, int max) {
         return random.nextInt(max - min + 1) + min;
     }
-
-
-    
 
 }
