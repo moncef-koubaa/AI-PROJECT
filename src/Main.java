@@ -94,7 +94,7 @@ public class Main {
 
                     for (String key : strategies) {
                         System.out.println("▶ Running " + key + "...");
-                        ExecutionResult res = monitorFunction( () -> deliveryPlanner.plan(gridString, key, true),false,key);
+                        ExecutionResult res = monitorFunction( () -> deliveryPlanner.plan(gridString, key, false),false,key);
                         results.add(res);
 
                     }
